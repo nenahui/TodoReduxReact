@@ -12,3 +12,7 @@ export interface ITodoState {
   isError: boolean;
   isCreating: boolean;
 }
+
+export interface IApiTodos {
+  [id: string]: ApiTodo;
+}

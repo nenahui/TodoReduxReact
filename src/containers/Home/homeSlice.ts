@@ -1,6 +1,10 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSlice,
+  type PayloadAction,
+} from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
-import type { ApiTodo, ITodoState } from '../../types';
+import type { ApiTodo, IApiTodos, ITodo, ITodoState } from '../../types';
 
 const initialState: ITodoState = {
   todos: [],
@@ -15,6 +19,20 @@ export const createTodo = createAsyncThunk(
     await axiosApi.post('todos.json', todo);
   }
 );
+
+export const fetchTodos = createAsyncThunk('home/fetch', async () => {
+  const { data: todosResponse } = await axiosApi.get<IApiTodos | null>(
+    'todos.json'
+  );
+  if (todosResponse !== null) {
+    return Object.keys(todosResponse).map((id) => ({
+      ...todosResponse[id],
+      id,
+    }));
+  } else {
+    return [];
+  }
+});
 
 export const homeSlice = createSlice({
   name: 'home',
@@ -32,7 +50,13 @@ export const homeSlice = createSlice({
       .addCase(createTodo.rejected, (state) => {
         state.isError = true;
         state.isCreating = false;
-      });
+      })
+      .addCase(
+        fetchTodos.fulfilled,
+        (state, action: PayloadAction<ITodo[]>) => {
+          state.todos = action.payload;
+        }
+      );
   },
 });
 
