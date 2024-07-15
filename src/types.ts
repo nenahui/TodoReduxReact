@@ -5,3 +5,10 @@ export interface ITodo {
 }
 
 export type ApiTodo = Omit<ITodo, 'id'>;
+
+export interface ITodoState {
+  todos: ITodo[];
+  isLoading: boolean;
+  isError: boolean;
+  isCreating: boolean;
+}

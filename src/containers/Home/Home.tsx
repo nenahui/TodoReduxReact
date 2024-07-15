@@ -1,19 +1,11 @@
+import { Typography } from 'antd';
 import { TodoForm } from '../../components/TodoForm/TodoForm';
-import type { ApiTodo } from '../../types';
 
 export const Home = () => {
-  const onFormSubmit = (todo: ApiTodo) => {
-    const data: ApiTodo = {
-      ...todo,
-      completed: false,
-    };
-
-    console.log(data);
-  };
-
   return (
     <div className={'container'}>
-      <TodoForm onSubmit={onFormSubmit} />
+      <Typography.Text>Create a new todo task…</Typography.Text>
+      <TodoForm />
     </div>
   );
 };
