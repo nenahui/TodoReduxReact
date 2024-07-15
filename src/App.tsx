@@ -1,10 +1,6 @@
 import './App.css';
-import { Typography } from 'antd';
+import { Home } from './containers/Home/Home';
 
 export const App = () => {
-  return (
-    <div className={'container'}>
-      <Typography.Text>Init app</Typography.Text>
-    </div>
-  );
+  return <Home />;
 };
