@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../app/store';
 import { deleteTodo, updateTodo } from '../../containers/Home/homeSlice';
 import type { ITodo } from '../../types';
-const { Title } = Typography;
+const { Text } = Typography;
 
 interface IProps {
   todo: ITodo;
@@ -18,9 +18,7 @@ export const TodoItem: React.FC<IProps> = ({ todo }) => {
     <Card>
       <Flex justify={'space-between'} align={'center'}>
         <Flex vertical>
-          <Title level={5} style={{ margin: 0, fontWeight: 500 }}>
-            {todo.title}
-          </Title>
+          <Text>{todo.title}</Text>
         </Flex>
         <Flex vertical align={'center'} gap={'small'}>
           <Checkbox

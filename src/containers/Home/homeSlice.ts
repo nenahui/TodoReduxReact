@@ -5,12 +5,12 @@ import {
 } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
 import type { ApiTodo, IApiTodos, ITodo, ITodoState } from '../../types';
+import { message } from 'antd';
 
 const initialState: ITodoState = {
   todos: [],
   isCreating: false,
   isLoading: false,
-  isError: false,
 };
 
 export const createTodo = createAsyncThunk(
@@ -61,22 +61,36 @@ export const homeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createTodo.pending, (state) => {
-        state.isError = false;
         state.isCreating = true;
       })
-      .addCase(createTodo.fulfilled, (state) => {
-        state.isCreating = false;
+      .addCase(fetchTodos.pending, (state) => {
+        if (state.todos.length <= 0) {
+          state.isLoading = true;
+        }
       })
-      .addCase(createTodo.rejected, (state) => {
-        state.isError = true;
+      .addCase(createTodo.fulfilled, (state) => {
         state.isCreating = false;
       })
       .addCase(
         fetchTodos.fulfilled,
         (state, action: PayloadAction<ITodo[]>) => {
           state.todos = action.payload;
+          state.isLoading = false;
         }
-      );
+      )
+      .addCase(fetchTodos.rejected, () => {
+        message.error('An error has occurred');
+      })
+      .addCase(updateTodo.rejected, () => {
+        message.error('An error has occurred');
+      })
+      .addCase(deleteTodo.rejected, () => {
+        message.error('An error has occurred');
+      })
+      .addCase(createTodo.rejected, (state) => {
+        state.isCreating = false;
+        message.error('An error has occurred');
+      });
   },
 });
 
