@@ -1,4 +1,5 @@
 import { Flex, Space, Typography } from 'antd';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../../app/store';
@@ -25,9 +26,19 @@ export const Home = () => {
         <Space direction={'vertical'} size={'small'}>
           <Typography.Text>Todo list</Typography.Text>
           <Flex gap={'middle'} vertical>
-            {todos.map((todo) => (
-              <TodoItem key={todo.id} todo={todo} />
-            ))}
+            <AnimatePresence>
+              {todos.map((todo, index) => (
+                <motion.div
+                  key={todo.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                >
+                  <TodoItem key={todo.id} todo={todo} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </Flex>
         </Space>
       </Flex>
