@@ -15,8 +15,9 @@ const initialState: ITodoState = {
 
 export const createTodo = createAsyncThunk(
   'home/add',
-  async (todo: ApiTodo) => {
+  async (todo: ApiTodo, { dispatch }) => {
     await axiosApi.post('todos.json', todo);
+    dispatch(fetchTodos());
   }
 );
 
@@ -36,18 +37,20 @@ export const fetchTodos = createAsyncThunk('home/fetch', async () => {
 
 export const updateTodo = createAsyncThunk(
   'home/update',
-  async (todo: ITodo) => {
+  async (todo: ITodo, { dispatch }) => {
     await axiosApi.put(`todos/${todo.id}.json`, {
       ...todo,
       completed: !todo.completed,
     });
+    dispatch(fetchTodos());
   }
 );
 
 export const deleteTodo = createAsyncThunk(
   'home/delete',
-  async (todo: ITodo) => {
+  async (todo: ITodo, { dispatch }) => {
     await axiosApi.delete(`todos/${todo.id}.json`);
+    dispatch(fetchTodos());
   }
 );
 
