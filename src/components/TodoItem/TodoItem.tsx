@@ -1,6 +1,9 @@
 import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import React from 'react';
 import { Button, Card, Checkbox, Flex, Popconfirm, Typography } from 'antd';
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../../app/store';
+import { updateTodo } from '../../containers/Home/homeSlice';
 import type { ITodo } from '../../types';
 const { Title } = Typography;
 
@@ -9,6 +12,8 @@ interface IProps {
 }
 
 export const TodoItem: React.FC<IProps> = ({ todo }) => {
+  const dispatch: AppDispatch = useDispatch();
+
   return (
     <Card>
       <Flex justify={'space-between'} align={'center'}>
@@ -18,7 +23,10 @@ export const TodoItem: React.FC<IProps> = ({ todo }) => {
           </Title>
         </Flex>
         <Flex vertical align={'center'} gap={'small'}>
-          <Checkbox checked={todo.completed} />
+          <Checkbox
+            onChange={() => dispatch(updateTodo(todo))}
+            checked={todo.completed}
+          />
           <Popconfirm
             title='Delete the task'
             description='Are you sure to delete this task?'

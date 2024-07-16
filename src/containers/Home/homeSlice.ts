@@ -34,6 +34,16 @@ export const fetchTodos = createAsyncThunk('home/fetch', async () => {
   }
 });
 
+export const updateTodo = createAsyncThunk(
+  'home/update',
+  async (todo: ITodo) => {
+    await axiosApi.put(`todos/${todo.id}.json`, {
+      ...todo,
+      completed: !todo.completed,
+    });
+  }
+);
+
 export const homeSlice = createSlice({
   name: 'home',
   initialState,
