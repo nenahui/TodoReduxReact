@@ -44,6 +44,13 @@ export const updateTodo = createAsyncThunk(
   }
 );
 
+export const deleteTodo = createAsyncThunk(
+  'home/delete',
+  async (todo: ITodo) => {
+    await axiosApi.delete(`todos/${todo.id}.json`);
+  }
+);
+
 export const homeSlice = createSlice({
   name: 'home',
   initialState,

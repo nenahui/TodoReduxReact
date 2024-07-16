@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, Card, Checkbox, Flex, Popconfirm, Typography } from 'antd';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../app/store';
-import { updateTodo } from '../../containers/Home/homeSlice';
+import { deleteTodo, updateTodo } from '../../containers/Home/homeSlice';
 import type { ITodo } from '../../types';
 const { Title } = Typography;
 
@@ -31,6 +31,7 @@ export const TodoItem: React.FC<IProps> = ({ todo }) => {
             title='Delete the task'
             description='Are you sure to delete this task?'
             icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+            onConfirm={() => dispatch(deleteTodo(todo))}
           >
             <Button icon={<DeleteOutlined />} type={'text'} danger />
           </Popconfirm>
