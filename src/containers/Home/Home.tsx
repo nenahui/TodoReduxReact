@@ -41,16 +41,16 @@ export const Home = () => {
         <Space direction={'vertical'} size={'small'}>
           <Typography.Text>{title}</Typography.Text>
           <Flex gap={'middle'} vertical>
-            {!isLoading && todos.length <= 0 && (
-              <Empty
-                className={'abs-center'}
-                description={'Todo list is empty!'}
-              />
-            )}
             <AnimatePresence>
               {isLoading ? <Spin className={'abs-center'} /> : todosElements}
             </AnimatePresence>
           </Flex>
+          {!isLoading && todos.length <= 0 && (
+            <Empty
+              className={'abs-center'}
+              description={'Todo list is empty!'}
+            />
+          )}
         </Space>
       </Flex>
     </div>
